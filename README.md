@@ -10,7 +10,8 @@
 3. **Install dependencies:**
    ```sh
    npm install
-4. **Start the development server:**
+4. **Copy the contents from `.env.example` to `.env`.**
+5. **Start the development server:**
    ```sh
    npm run dev
  
