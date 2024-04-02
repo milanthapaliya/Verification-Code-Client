@@ -6,6 +6,7 @@ const VerificationCode = (props) => {
     const navigate = useNavigate();
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [serverError, setServerError] = useState(false);
+    const [loading,setLoading] = useState(false);
     const refs = [
         useRef(null),
         useRef(null),
@@ -43,6 +44,7 @@ const VerificationCode = (props) => {
         if(!validateCode()){
             const data = parseInt(otp.join(''), 10);
             try{
+                setLoading(true);
                 const response = await fetch(apiUrl + "/code", {
                     method: 'POST',
                     headers: {
@@ -58,6 +60,8 @@ const VerificationCode = (props) => {
                 }
             }catch(e){
                 console.log(e,"error");
+            }finally {
+                setLoading(false);
             }
         }
     }
@@ -84,7 +88,7 @@ const VerificationCode = (props) => {
             ))}
         </div>
             <div className={"container-submit"}>
-                <button disabled={validateCode()} onClick={handleSubmit} className={"button-submit"}>Submit</button>
+                <button disabled={validateCode()} onClick={handleSubmit} className={"button-submit"}>{loading ? "Submitting": "Submit"}</button>
                 {serverError && <span className={"text-error"}>Verification Error</span>}
             </div>
         </div>
