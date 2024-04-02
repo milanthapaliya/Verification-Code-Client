@@ -65,6 +65,27 @@ const VerificationCode = (props) => {
             }
         }
     }
+    const handlePaste = (e) => {
+        e.preventDefault();
+        const pasteData = e.clipboardData.getData('text/plain');
+        const pasteValues = pasteData.split('');
+
+        setOtp((prevOtp) => {
+            const newOtp = [...prevOtp];
+            pasteValues.forEach((value, index) => {
+                if (index < 6) {
+                    newOtp[index] = value;
+                }
+            });
+            return newOtp;
+        });
+
+        // Focus on the next input if there is space
+        if (pasteValues.length > 0) {
+            const nextIndex = Math.min(pasteValues.length, 5);
+            refs[nextIndex].current.focus();
+        }
+    };
 
     return (
         <>
@@ -72,7 +93,7 @@ const VerificationCode = (props) => {
                 <div>
                     <p className={"text-verification-code"}>Verification code:</p>
                 </div>
-            <div className="otp-input">
+            <div className="otp-input" onPaste={handlePaste}>
             {otp.map((value, index) => (
                 <input
                     key={index}
@@ -88,7 +109,7 @@ const VerificationCode = (props) => {
             ))}
         </div>
             <div className={"container-submit"}>
-                <button disabled={validateCode()} onClick={handleSubmit} className={"button-submit"}>{loading ? "Submitting": "Submit"}</button>
+                <button disabled={validateCode()} onClick={handleSubmit} className={"button-submit"}>{loading ? "Submitting..": "Submit"}</button>
                 {serverError && <span className={"text-error"}>Verification Error</span>}
             </div>
         </div>
