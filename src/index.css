@@ -64,6 +64,7 @@ body {
 
 .success-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -78,12 +79,27 @@ body {
   font-size: 24px;
   text-align: center;
   max-width: 80%;
+  margin-bottom: 20px;
+}
+
+.home-button {
+  padding: 10px 20px;
+  background-color: #2a2356;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.home-button:hover {
+  background-color: #1a1436;
 }
 
 @media (max-width: 768px) {
   .success-message {
-    font-size: 20px;
-    padding: 15px;
+    font-size: 18px;
   }
 }
+
 
